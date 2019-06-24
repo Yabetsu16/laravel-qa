@@ -36,7 +36,7 @@ class Answer extends Model
     {
         return $this->isBest();
     }
-    
+
     public function isBest()
     {
         return $this->id === $this->question->best_answer_id;
@@ -53,5 +53,10 @@ class Answer extends Model
         static::deleted(function($answer) {
             $answer->question->decrement('answers_count');
         });
+    }
+
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
     }
 }
